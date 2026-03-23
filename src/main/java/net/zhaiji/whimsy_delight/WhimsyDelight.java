@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.zhaiji.whimsy_delight.event.CommonEventManager;
+import net.zhaiji.whimsy_delight.init.WDBlockEntityType;
 import net.zhaiji.whimsy_delight.init.WDBlocks;
 import net.zhaiji.whimsy_delight.init.WDCreativeModeTab;
 import net.zhaiji.whimsy_delight.init.WDItems;
@@ -27,6 +28,7 @@ public class WhimsyDelight {
 
         WDItems.ITEM.register(modBus);
         WDBlocks.BLOCK.register(modBus);
+        WDBlockEntityType.BLOCK_ENTITY_TYPE.register(modBus);
         WDCreativeModeTab.CREATIVE_MODE_TAB.register(modBus);
 
         CommonEventManager.init(modBus, forgeBus);

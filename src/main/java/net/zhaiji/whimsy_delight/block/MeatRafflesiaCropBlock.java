@@ -4,19 +4,24 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.zhaiji.whimsy_delight.block.blockentity.WDBaseCropBlockEntity;
+import net.zhaiji.whimsy_delight.init.WDItems;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -34,8 +39,15 @@ public class MeatRafflesiaCropBlock extends CropBlock implements EntityBlock {
     };
 
     public MeatRafflesiaCropBlock() {
-        // TODO
-        super(BlockBehaviour.Properties.of().noOcclusion().strength(1));
+        super(
+            Properties.of()
+            .mapColor(MapColor.PLANT)
+            .noCollission()
+            .randomTicks()
+            .instabreak()
+            .sound(SoundType.CROP)
+            .pushReaction(PushReaction.DESTROY)
+        );
     }
 
     @Override
@@ -67,8 +79,23 @@ public class MeatRafflesiaCropBlock extends CropBlock implements EntityBlock {
     }
 
     @Override
+    protected ItemLike getBaseSeedId() {
+        return WDItems.MEAT_RAFFLESIA.get();
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(AGE);
+    }
+
+    /**
+     * 重写 onRemove 方法以保护 BlockEntity 在方块状态变化时不被移除。
+     * 当作物使用骨粉生长时，方块状态会改变，但 Block 应该保持不变，
+     * 因此 BlockEntity 应该被保留。
+     */
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+
     }
 
     @Nullable

@@ -2,6 +2,7 @@ package net.zhaiji.whimsy_delight.client.model;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.zhaiji.whimsy_delight.WhimsyDelight;
@@ -12,14 +13,14 @@ import software.bernie.geckolib.model.GeoModel;
 public class MeatRafflesiaModel extends GeoModel<WDBaseCropBlockEntity> {
     @Override
     public ResourceLocation getModelResource(WDBaseCropBlockEntity animatable) {
-        int age = animatable.getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AGE_3);
+        int age = animatable.getBlockState().getValue(BlockStateProperties.AGE_3);
         return new ResourceLocation(WhimsyDelight.MOD_ID, "geo/meat_rafflesia_crop_stage_" + age + ".geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(WDBaseCropBlockEntity animatable) {
-        int age = animatable.getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AGE_3);
-        return new ResourceLocation(WhimsyDelight.MOD_ID, "geo/meat_rafflesia_crop_stage_" + age + ".geo.json");
+        int age = animatable.getBlockState().getValue(BlockStateProperties.AGE_3);
+        return new ResourceLocation(WhimsyDelight.MOD_ID, "textures/block/meat_rafflesia_crop_stage_" + age + ".png");
     }
 
     @Override

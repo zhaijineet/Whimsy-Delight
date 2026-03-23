@@ -18,8 +18,7 @@ public class WDCreativeModeTab {
     public static final RegistryObject<CreativeModeTab> WHIMSY_DELIGHT_TAB = CREATIVE_MODE_TAB.register(
         "whimsy_delight_tab",
         () -> CreativeModeTab.builder()
-            // TODO
-            .icon(() -> WDItems.ITEM.getEntries().stream().findFirst().get().get().getDefaultInstance())
+            .icon(() -> WDItems.MEAT_RAFFLESIA.get().getDefaultInstance())
             .title(Component.translatable(WHIMSY_DELIGHT_TAB_TRANSLATABLE))
             .displayItems((pParameters, pOutput) -> {
                 for (RegistryObject<Item> entry : WDItems.ITEM.getEntries()) {
