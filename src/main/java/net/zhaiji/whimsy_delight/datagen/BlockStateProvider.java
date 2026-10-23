@@ -1,12 +1,19 @@
 package net.zhaiji.whimsy_delight.datagen;
 
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.zhaiji.whimsy_delight.WhimsyDelight;
+import net.zhaiji.whimsy_delight.block.LobsterPumpkinAttachedBlock;
+import net.zhaiji.whimsy_delight.block.LobsterPumpkinStemAttachedBlock;
 import net.zhaiji.whimsy_delight.init.WDBlocks;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class BlockStateProvider extends net.minecraftforge.client.model.generators.BlockStateProvider {
     public BlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -17,6 +24,19 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
     protected void registerStatesAndModels() {
         craftStation();
         meatRafflesia();
+        chickenTurnip();
+        eggplant();
+        gooseEggplant();
+        duckEggplant();
+        milkFungus();
+        proteinSoil();
+        bonebushLog();
+        bonebushLeaves();
+        bonebushSapling();
+        salmonRoeberry();
+        sturgeonRoeberry();
+        lobsterPumpkin();
+        baconKelp();
     }
 
     private void craftStation() {
@@ -37,5 +57,226 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                 .modelFile(modelFile)
                 .addModel();
         }
+    }
+
+    private void chickenTurnip() {
+        Block block = WDBlocks.CHICKEN_TURNIP.get();
+        for (int age = 0; age <= 3; age++) {
+            ModelFile modelFile = models().getExistingFile(modLoc("block/chicken_turnip_stage_" + (age + 1)));
+            getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.AGE_3, age)
+                .modelForState()
+                .modelFile(modelFile)
+                .addModel();
+        }
+    }
+
+    private void eggplant() {
+        Block block = WDBlocks.EGGPLANT.get();
+        for (int age = 0; age <= 4; age++) {
+            ModelFile modelFile = models().getExistingFile(modLoc("block/eggplant_stage_" + (age + 1)));
+            getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.AGE_4, age)
+                .modelForState()
+                .modelFile(modelFile)
+                .addModel();
+        }
+    }
+
+    private void gooseEggplant() {
+        Block block = WDBlocks.GOOSE_EGGPLANT.get();
+        String[] stageModels = {"eggplant_stage_1", "eggplant_stage_2", "eggplant_stage_3", "eggplant_stage_4", "goose_eggplant_stage_5"};
+        for (int age = 0; age <= 4; age++) {
+            ModelFile modelFile = models().getExistingFile(modLoc("block/" + stageModels[age]));
+            getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.AGE_4, age)
+                .modelForState()
+                .modelFile(modelFile)
+                .addModel();
+        }
+    }
+
+    private void duckEggplant() {
+        Block block = WDBlocks.DUCK_EGGPLANT.get();
+        String[] stageModels = {"eggplant_stage_1", "eggplant_stage_2", "eggplant_stage_3", "eggplant_stage_4", "duck_eggplant_stage_5"};
+        for (int age = 0; age <= 4; age++) {
+            ModelFile modelFile = models().getExistingFile(modLoc("block/" + stageModels[age]));
+            getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.AGE_4, age)
+                .modelForState()
+                .modelFile(modelFile)
+                .addModel();
+        }
+    }
+
+    private void milkFungus() {
+        Block block = WDBlocks.MILK_FUNGUS.get();
+        for (int age = 0; age <= 4; age++) {
+            ModelFile modelFile = models().getExistingFile(modLoc("block/milk_fungus_stage_" + (age + 1)));
+            getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.AGE_4, age)
+                .modelForState()
+                .modelFile(modelFile)
+                .addModel();
+        }
+    }
+
+    private void proteinSoil() {
+        Block block = WDBlocks.PROTEIN_SOIL.get();
+        // 六个面全部使用统一贴图；独立方块掉落自身，生成物品模型
+        ModelFile model = models().cubeAll("protein_soil", modLoc("block/protein_soil"));
+        simpleBlock(block, model);
+        simpleBlockItem(block, model);
+    }
+
+    private void bonebushLog() {
+        RotatedPillarBlock block = (RotatedPillarBlock) WDBlocks.BONEBUSH_LOG.get();
+        ModelFile vertical = models().cubeColumn(
+            "bonebush_log",
+            modLoc("block/bonebush_log"),
+            modLoc("block/bonebush_log_top")
+        );
+        ModelFile horizontal = models().cubeColumnHorizontal(
+            "bonebush_log_horizontal",
+            modLoc("block/bonebush_log"),
+            modLoc("block/bonebush_log_top")
+        );
+        getVariantBuilder(block)
+            .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y)
+                .modelForState().modelFile(vertical).addModel()
+            .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X)
+                .modelForState().modelFile(horizontal).rotationX(90).addModel()
+            .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Z)
+                .modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel();
+        simpleBlockItem(block, vertical);
+    }
+
+    private void bonebushLeaves() {
+        Block block = WDBlocks.BONEBUSH_LEAVES.get();
+        ModelFile model = models().singleTexture(
+            "block/bonebush_leaves",
+            mcLoc("block/leaves"),
+            "all",
+            modLoc("block/bonebush_leaves")
+        );
+        // distance 1~7 × persistent true/false 全部指向同一模型
+        for (int distance = 1; distance <= 7; distance++) {
+            for (boolean persistent : new boolean[]{false, true}) {
+                getVariantBuilder(block)
+                    .partialState()
+                    .with(LeavesBlock.DISTANCE, distance)
+                    .with(LeavesBlock.PERSISTENT, persistent)
+                    .modelForState()
+                    .modelFile(model)
+                    .addModel();
+            }
+        }
+        simpleBlockItem(block, model);
+    }
+
+    private void bonebushSapling() {
+        Block block = WDBlocks.BONEBUSH_SAPLING.get();
+        ModelFile model = models().getExistingFile(modLoc("block/bonebush_sapling"));
+        // stage 0/1 都指向同一模型
+        getVariantBuilder(block)
+            .partialState().with(SaplingBlock.STAGE, 0).modelForState().modelFile(model).addModel()
+            .partialState().with(SaplingBlock.STAGE, 1).modelForState().modelFile(model).addModel();
+        // 物品栏图标用手绘 16x16 平面图标（models/item/bonebush_sapling.json 为手写文件），不再继承 3D 方块模型
+    }
+
+    private void salmonRoeberry() {
+        Block block = WDBlocks.SALMON_ROEBERRY.get();
+        // 阶段 0~2 共用贴图，阶段 3 用大马哈专属
+        String[] stageModels = {"roeberry_stage_1", "roeberry_stage_2", "roeberry_stage_3", "salmon_roeberry_stage_4"};
+        for (int age = 0; age <= 3; age++) {
+            ModelFile modelFile = models().getExistingFile(modLoc("block/" + stageModels[age]));
+            getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.AGE_3, age)
+                .modelForState()
+                .modelFile(modelFile)
+                .addModel();
+        }
+    }
+
+    private void sturgeonRoeberry() {
+        Block block = WDBlocks.STURGEON_ROEBERRY.get();
+        String[] stageModels = {"roeberry_stage_1", "roeberry_stage_2", "roeberry_stage_3", "sturgeon_roeberry_stage_4"};
+        for (int age = 0; age <= 3; age++) {
+            ModelFile modelFile = models().getExistingFile(modLoc("block/" + stageModels[age]));
+            getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.AGE_3, age)
+                .modelForState()
+                .modelFile(modelFile)
+                .addModel();
+        }
+    }
+
+    private void lobsterPumpkin() {
+        // 茎方块：5个生长阶段（stage_1~5，age 0~4）；stage_6 为结果后的附着茎模型
+        Block stemBlock = WDBlocks.LOBSTER_PUMPKIN_STEM.get();
+        for (int age = 0; age <= 4; age++) {
+            ModelFile modelFile = models().getExistingFile(modLoc("block/lobster_pumpkin_stage_" + (age + 1)));
+            getVariantBuilder(stemBlock)
+                .partialState()
+                .with(BlockStateProperties.AGE_4, age)
+                .modelForState()
+                .modelFile(modelFile)
+                .addModel();
+        }
+
+        // 普通产物方块（无方向属性）
+        Block fruitBlock = WDBlocks.LOBSTER_PUMPKIN.get();
+        ModelFile fruitModel = models().getExistingFile(modLoc("block/lobster_pumpkin"));
+        getVariantBuilder(fruitBlock)
+            .partialState()
+            .modelForState()
+            .modelFile(fruitModel)
+            .addModel();
+        simpleBlockItem(fruitBlock, fruitModel);
+
+        // Attached产物方块（4个水平方向，模型按方向旋转）
+        Block attachedBlock = WDBlocks.LOBSTER_PUMPKIN_ATTACHED.get();
+        ModelFile attachedModel = models().getExistingFile(modLoc("block/lobster_pumpkin_attached"));
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            getVariantBuilder(attachedBlock)
+                .partialState()
+                .with(LobsterPumpkinAttachedBlock.FACING, dir)
+                .modelForState()
+                .modelFile(attachedModel)
+                .rotationY((int) dir.toYRot())
+                .addModel();
+        }
+
+        // 附着茎方块（4个水平方向，复用阶段6模型，朝向果实）
+        // 注意：stage_6 模型的藤蔓默认朝西（-X）弯曲，因此旋转基准要偏移 270°
+        Block attachedStemBlock = WDBlocks.LOBSTER_PUMPKIN_STEM_ATTACHED.get();
+        ModelFile attachedStemModel = models().getExistingFile(modLoc("block/lobster_pumpkin_stage_6"));
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            getVariantBuilder(attachedStemBlock)
+                .partialState()
+                .with(LobsterPumpkinStemAttachedBlock.FACING, dir)
+                .modelForState()
+                .modelFile(attachedStemModel)
+                .rotationY((int) ((dir.toYRot() + 270) % 360))
+                .addModel();
+        }
+    }
+
+    private void baconKelp() {
+        // 培根海带：头部与茎体均为静态 cross 模型（与原版海带一致，age 不改变外观）
+        ModelFile headModel = models().cross("bacon_kelp", modLoc("block/bacon_kelp"));
+        getVariantBuilder(WDBlocks.BACON_KELP.get())
+            .forAllStates(state -> ConfiguredModel.builder().modelFile(headModel).build());
+
+        ModelFile plantModel = models().cross("bacon_kelp_plant", modLoc("block/bacon_kelp_plant"));
+        getVariantBuilder(WDBlocks.BACON_KELP_PLANT.get())
+            .forAllStates(state -> ConfiguredModel.builder().modelFile(plantModel).build());
     }
 }
