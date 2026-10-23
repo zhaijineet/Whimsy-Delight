@@ -10,7 +10,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.zhaiji.whimsy_delight.WhimsyDelight;
+import net.zhaiji.whimsy_delight.block.LobsterPumpkinAttachedBlock;
+import net.zhaiji.whimsy_delight.block.LobsterPumpkinStemAttachedBlock;
 import net.zhaiji.whimsy_delight.init.WDBlocks;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class BlockStateProvider extends net.minecraftforge.client.model.generators.BlockStateProvider {
     public BlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -32,6 +35,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         bonebushSapling();
         salmonRoeberry();
         sturgeonRoeberry();
+        lobsterPumpkin();
+        baconKelp();
     }
 
     private void craftStation() {
@@ -211,5 +216,67 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                 .modelFile(modelFile)
                 .addModel();
         }
+    }
+
+    private void lobsterPumpkin() {
+        // 茎方块：5个生长阶段（stage_1~5，age 0~4）；stage_6 为结果后的附着茎模型
+        Block stemBlock = WDBlocks.LOBSTER_PUMPKIN_STEM.get();
+        for (int age = 0; age <= 4; age++) {
+            ModelFile modelFile = models().getExistingFile(modLoc("block/lobster_pumpkin_stage_" + (age + 1)));
+            getVariantBuilder(stemBlock)
+                .partialState()
+                .with(BlockStateProperties.AGE_4, age)
+                .modelForState()
+                .modelFile(modelFile)
+                .addModel();
+        }
+
+        // 普通产物方块（无方向属性）
+        Block fruitBlock = WDBlocks.LOBSTER_PUMPKIN.get();
+        ModelFile fruitModel = models().getExistingFile(modLoc("block/lobster_pumpkin"));
+        getVariantBuilder(fruitBlock)
+            .partialState()
+            .modelForState()
+            .modelFile(fruitModel)
+            .addModel();
+        simpleBlockItem(fruitBlock, fruitModel);
+
+        // Attached产物方块（4个水平方向，模型按方向旋转）
+        Block attachedBlock = WDBlocks.LOBSTER_PUMPKIN_ATTACHED.get();
+        ModelFile attachedModel = models().getExistingFile(modLoc("block/lobster_pumpkin_attached"));
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            getVariantBuilder(attachedBlock)
+                .partialState()
+                .with(LobsterPumpkinAttachedBlock.FACING, dir)
+                .modelForState()
+                .modelFile(attachedModel)
+                .rotationY((int) dir.toYRot())
+                .addModel();
+        }
+
+        // 附着茎方块（4个水平方向，复用阶段6模型，朝向果实）
+        // 注意：stage_6 模型的藤蔓默认朝西（-X）弯曲，因此旋转基准要偏移 270°
+        Block attachedStemBlock = WDBlocks.LOBSTER_PUMPKIN_STEM_ATTACHED.get();
+        ModelFile attachedStemModel = models().getExistingFile(modLoc("block/lobster_pumpkin_stage_6"));
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            getVariantBuilder(attachedStemBlock)
+                .partialState()
+                .with(LobsterPumpkinStemAttachedBlock.FACING, dir)
+                .modelForState()
+                .modelFile(attachedStemModel)
+                .rotationY((int) ((dir.toYRot() + 270) % 360))
+                .addModel();
+        }
+    }
+
+    private void baconKelp() {
+        // 培根海带：头部与茎体均为静态 cross 模型（与原版海带一致，age 不改变外观）
+        ModelFile headModel = models().cross("bacon_kelp", modLoc("block/bacon_kelp"));
+        getVariantBuilder(WDBlocks.BACON_KELP.get())
+            .forAllStates(state -> ConfiguredModel.builder().modelFile(headModel).build());
+
+        ModelFile plantModel = models().cross("bacon_kelp_plant", modLoc("block/bacon_kelp_plant"));
+        getVariantBuilder(WDBlocks.BACON_KELP_PLANT.get())
+            .forAllStates(state -> ConfiguredModel.builder().modelFile(plantModel).build());
     }
 }

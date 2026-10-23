@@ -5,12 +5,18 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.zhaiji.whimsy_delight.WhimsyDelight;
+import net.zhaiji.whimsy_delight.block.BaconKelpBlock;
+import net.zhaiji.whimsy_delight.block.BaconKelpPlantBlock;
 import net.zhaiji.whimsy_delight.block.BonebushSaplingBlock;
 import net.zhaiji.whimsy_delight.block.ChickenTurnipCropBlock;
 import net.zhaiji.whimsy_delight.block.CraftingStationBlock;
 import net.zhaiji.whimsy_delight.block.DuckEggplantCropBlock;
 import net.zhaiji.whimsy_delight.block.EggplantCropBlock;
 import net.zhaiji.whimsy_delight.block.GooseEggplantCropBlock;
+import net.zhaiji.whimsy_delight.block.LobsterPumpkinAttachedBlock;
+import net.zhaiji.whimsy_delight.block.LobsterPumpkinBlock;
+import net.zhaiji.whimsy_delight.block.LobsterPumpkinStemAttachedBlock;
+import net.zhaiji.whimsy_delight.block.LobsterPumpkinStemBlock;
 import net.zhaiji.whimsy_delight.block.MeatRafflesiaCropBlock;
 import net.zhaiji.whimsy_delight.block.MilkFungusCropBlock;
 import net.zhaiji.whimsy_delight.block.ProteinSoilBlock;
@@ -107,6 +113,39 @@ public class WDBlocks {
     public static final RegistryObject<Block> BONEBUSH_SAPLING = BLOCK.register(
         "bonebush_sapling",
         BonebushSaplingBlock::new
+    );
+
+    // 龙虾南瓜
+    public static final RegistryObject<Block> LOBSTER_PUMPKIN_STEM = BLOCK.register(
+        "lobster_pumpkin_stem",
+        LobsterPumpkinStemBlock::new
+    );
+
+    public static final RegistryObject<Block> LOBSTER_PUMPKIN = BLOCK.register(
+        "lobster_pumpkin",
+        LobsterPumpkinBlock::new
+    );
+
+    public static final RegistryObject<Block> LOBSTER_PUMPKIN_ATTACHED = BLOCK.register(
+        "lobster_pumpkin_attached",
+        LobsterPumpkinAttachedBlock::new
+    );
+
+    // 龙虾南瓜附着茎（茎结果后的状态，果实被收走后变回成熟茎）
+    public static final RegistryObject<Block> LOBSTER_PUMPKIN_STEM_ATTACHED = BLOCK.register(
+        "lobster_pumpkin_stem_attached",
+        LobsterPumpkinStemAttachedBlock::new
+    );
+
+    // 培根海带（头部/茎体，机制同原版海带）
+    public static final RegistryObject<Block> BACON_KELP = BLOCK.register(
+        "bacon_kelp",
+        BaconKelpBlock::new
+    );
+
+    public static final RegistryObject<Block> BACON_KELP_PLANT = BLOCK.register(
+        "bacon_kelp_plant",
+        BaconKelpPlantBlock::new
     );
 
     // 大马哈鱼子莓丛

@@ -124,6 +124,18 @@ public class WDItems {
         () -> new BlockItem(WDBlocks.BONEBUSH_SAPLING.get(), new Item.Properties())
     );
 
+    // 龙虾南瓜种子
+    public static final RegistryObject<Item> LOBSTER_PUMPKIN_SEEDS = ITEM.register(
+        "lobster_pumpkin_seeds",
+        () -> new ItemNameBlockItem(WDBlocks.LOBSTER_PUMPKIN_STEM.get(), new Item.Properties())
+    );
+
+    // 龙虾南瓜（产物）
+    public static final RegistryObject<Item> LOBSTER_PUMPKIN = ITEM.register(
+        "lobster_pumpkin",
+        () -> new BlockItem(WDBlocks.LOBSTER_PUMPKIN.get(), new Item.Properties())
+    );
+
     // 大马哈鱼子莓（产物 = 种子，右键种植）
     public static final RegistryObject<Item> SALMON_ROEBERRY = ITEM.register(
         "salmon_roeberry",
@@ -134,5 +146,11 @@ public class WDItems {
     public static final RegistryObject<Item> STURGEON_ROEBERRY = ITEM.register(
         "sturgeon_roeberry",
         () -> new ItemNameBlockItem(WDBlocks.STURGEON_ROEBERRY.get(), new Item.Properties())
+    );
+
+    // 培根海带（可放置于水中，同原版海带物品）
+    public static final RegistryObject<Item> BACON_KELP = ITEM.register(
+        "bacon_kelp",
+        () -> new BlockItem(WDBlocks.BACON_KELP.get(), new Item.Properties())
     );
 }

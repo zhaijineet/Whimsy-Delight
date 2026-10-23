@@ -18,6 +18,7 @@ import net.zhaiji.whimsy_delight.block.ChickenTurnipCropBlock;
 import net.zhaiji.whimsy_delight.block.EggplantCropBlock;
 import net.zhaiji.whimsy_delight.block.MeatRafflesiaCropBlock;
 import net.zhaiji.whimsy_delight.block.MilkFungusCropBlock;
+import net.zhaiji.whimsy_delight.block.LobsterPumpkinStemBlock;
 import net.zhaiji.whimsy_delight.block.RoeberryBushBlock;
 import net.zhaiji.whimsy_delight.init.WDBlocks;
 import net.zhaiji.whimsy_delight.init.WDItems;
@@ -251,6 +252,62 @@ public class BlockLootTable extends BlockLootSubProvider {
                         .setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(WDItems.STURGEON_ROEBERRY.get()))
                         .when(sturgeonMature)
+                )
+            )
+        );
+
+        // 龙虾南瓜茎：掉种子（未成熟成熟都掉，与原版南瓜茎一致）
+        Block lobsterStemBlock = WDBlocks.LOBSTER_PUMPKIN_STEM.get();
+        add(lobsterStemBlock, LootTable.lootTable()
+            .withPool(
+                applyExplosionCondition(
+                    lobsterStemBlock,
+                    LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(WDItems.LOBSTER_PUMPKIN_SEEDS.get()))
+                )
+            )
+        );
+
+        // 龙虾南瓜附着茎：掉种子（同原版 attached stem）
+        Block lobsterAttachedStemBlock = WDBlocks.LOBSTER_PUMPKIN_STEM_ATTACHED.get();
+        add(lobsterAttachedStemBlock, LootTable.lootTable()
+            .withPool(
+                applyExplosionCondition(
+                    lobsterAttachedStemBlock,
+                    LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(WDItems.LOBSTER_PUMPKIN_SEEDS.get()))
+                )
+            )
+        );
+
+        // 龙虾南瓜（产物）：普通状态 dropSelf
+        dropSelf(WDBlocks.LOBSTER_PUMPKIN.get());
+        // attached 状态没有独立物品，掉落普通龙虾南瓜物品
+        Block lobsterAttachedFruitBlock = WDBlocks.LOBSTER_PUMPKIN_ATTACHED.get();
+        add(lobsterAttachedFruitBlock, LootTable.lootTable()
+            .withPool(
+                applyExplosionCondition(
+                    lobsterAttachedFruitBlock,
+                    LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(WDItems.LOBSTER_PUMPKIN.get()))
+                )
+            )
+        );
+
+        // 培根海带头：dropSelf
+        dropSelf(WDBlocks.BACON_KELP.get());
+        // 培根海带茎体无独立物品，掉培根海带物品（同原版 kelp_plant 掉 kelp）
+        Block baconKelpPlantBlock = WDBlocks.BACON_KELP_PLANT.get();
+        add(baconKelpPlantBlock, LootTable.lootTable()
+            .withPool(
+                applyExplosionCondition(
+                    baconKelpPlantBlock,
+                    LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(WDItems.BACON_KELP.get()))
                 )
             )
         );

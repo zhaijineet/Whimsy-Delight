@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "whimsy_delight:block/lobster_pumpkin_attached",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "whimsy_delight:block/lobster_pumpkin_attached",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "whimsy_delight:block/lobster_pumpkin_attached"
+    },
+    "facing=west": {
+      "model": "whimsy_delight:block/lobster_pumpkin_attached",
+      "y": 90
+    }
+  }
+}

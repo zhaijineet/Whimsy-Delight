@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "whimsy_delight:block/bacon_kelp_plant"
+  }
+}

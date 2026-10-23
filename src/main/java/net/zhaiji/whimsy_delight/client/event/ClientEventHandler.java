@@ -31,6 +31,12 @@ public class ClientEventHandler {
             ItemBlockRenderTypes.setRenderLayer(WDBlocks.BONEBUSH_LEAVES.get(), RenderType.cutoutMipped());
             ItemBlockRenderTypes.setRenderLayer(WDBlocks.SALMON_ROEBERRY.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(WDBlocks.STURGEON_ROEBERRY.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(WDBlocks.LOBSTER_PUMPKIN_STEM.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(WDBlocks.LOBSTER_PUMPKIN.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(WDBlocks.LOBSTER_PUMPKIN_ATTACHED.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(WDBlocks.LOBSTER_PUMPKIN_STEM_ATTACHED.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(WDBlocks.BACON_KELP.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(WDBlocks.BACON_KELP_PLANT.get(), RenderType.cutout());
 
             // 注册工作站 GUI
             MenuScreens.register(WDMenuTypes.CRAFTING_STATION.get(), CraftingStationScreen::new);
